@@ -5,9 +5,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.MapsId;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.NotNull;
@@ -19,11 +16,6 @@ public class PortfolioProject {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @OneToOne
-    @MapsId
-    @JoinColumn(name = "id")
-    private Technician technician;
 
     @Column(nullable = false)
     @Size(min = 5, max = 100)
@@ -57,14 +49,6 @@ public class PortfolioProject {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Technician getTechnician() {
-        return technician;
-    }
-
-    public void setTechnician(Technician technician) {
-        this.technician = technician;
     }
 
     public String getName() {
@@ -119,7 +103,6 @@ public class PortfolioProject {
     public String toString() {
         return "PortfolioProject{" +
                 "id=" + id +
-                ", technician=" + technician +
                 ", name='" + name + '\'' +
                 ", shortProjectDescription='" + shortProjectDescription + '\'' +
                 ", detailedProjectDescription='" + detailedProjectDescription + '\'' +
