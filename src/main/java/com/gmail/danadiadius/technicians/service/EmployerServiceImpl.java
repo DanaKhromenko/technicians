@@ -6,11 +6,17 @@ import com.gmail.danadiadius.technicians.lib.Service;
 import com.gmail.danadiadius.technicians.model.Employer;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class EmployerServiceImpl implements EmployerService {
     @Inject
     private EmployerDao employerDao;
+
+    @Override
+    public Optional<Employer> findByEmail(String email) {
+        return employerDao.findByEmail(email);
+    }
 
     @Override
     public Employer create(Employer employer) {
