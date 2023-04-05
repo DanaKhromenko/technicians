@@ -17,6 +17,9 @@ public class Technician {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
+    private String name;
+
     @Column(unique = true, nullable = false)
     private String email;
 
@@ -32,6 +35,14 @@ public class Technician {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getEmail() {
@@ -62,6 +73,7 @@ public class Technician {
     public String toString() {
         return "Technician{" +
                 "id=" + id +
+                ", name='" + name + '\'' +
                 ", email='" + email + '\'' +
                 ", desiredPosition='" + desiredPosition + '\'' +
                 ", portfolioProjects=" + portfolioProjects +
