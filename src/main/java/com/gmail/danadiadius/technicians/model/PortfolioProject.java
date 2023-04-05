@@ -1,17 +1,26 @@
 package com.gmail.danadiadius.technicians.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.List;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
-@Table(name="portfolio_projects")
+@Table(name="/portfolio_projects")
 public class PortfolioProject {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -37,78 +46,24 @@ public class PortfolioProject {
 
     private String pictureUrl;
 
+    @OneToMany
+    @Size(max = 50)
+    private List<Tool> tools;
+
     @AssertTrue(message = "At least one of sourceCodeUrl or interactiveResultUrl must be filled!")
     private boolean isValid() {
         return (sourceCodeUrl != null && sourceCodeUrl.trim().length() > 5)
                 || (interactiveResultUrl != null && interactiveResultUrl.trim().length() > 5);
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
+    public PortfolioProject(String name, String shortProjectDescription, String detailedProjectDescription,
+                            String sourceCodeUrl, String interactiveResultUrl, String pictureUrl, List<Tool> tools) {
         this.name = name;
-    }
-
-    public String getShortProjectDescription() {
-        return shortProjectDescription;
-    }
-
-    public void setShortProjectDescription(String shortProjectDescription) {
         this.shortProjectDescription = shortProjectDescription;
-    }
-
-    public String getDetailedProjectDescription() {
-        return detailedProjectDescription;
-    }
-
-    public void setDetailedProjectDescription(String detailedProjectDescription) {
         this.detailedProjectDescription = detailedProjectDescription;
-    }
-
-    public String getSourceCodeUrl() {
-        return sourceCodeUrl;
-    }
-
-    public void setSourceCodeUrl(String sourceCodeUrl) {
         this.sourceCodeUrl = sourceCodeUrl;
-    }
-
-    public String getInteractiveResultUrl() {
-        return interactiveResultUrl;
-    }
-
-    public void setInteractiveResultUrl(String interactiveResultUrl) {
         this.interactiveResultUrl = interactiveResultUrl;
-    }
-
-    public String getPictureUrl() {
-        return pictureUrl;
-    }
-
-    public void setPictureUrl(String pictureUrl) {
         this.pictureUrl = pictureUrl;
-    }
-
-    @Override
-    public String toString() {
-        return "PortfolioProject{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", shortProjectDescription='" + shortProjectDescription + '\'' +
-                ", detailedProjectDescription='" + detailedProjectDescription + '\'' +
-                ", sourceCodeUrl='" + sourceCodeUrl + '\'' +
-                ", interactiveResultUrl='" + interactiveResultUrl + '\'' +
-                ", pictureUrl='" + pictureUrl + '\'' +
-                '}';
+        this.tools = tools;
     }
 }
