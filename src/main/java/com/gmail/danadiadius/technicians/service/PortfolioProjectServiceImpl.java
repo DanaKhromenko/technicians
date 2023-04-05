@@ -4,6 +4,7 @@ import com.gmail.danadiadius.technicians.dao.PortfolioProjectDao;
 import com.gmail.danadiadius.technicians.lib.Inject;
 import com.gmail.danadiadius.technicians.lib.Service;
 import com.gmail.danadiadius.technicians.model.PortfolioProject;
+import com.gmail.danadiadius.technicians.model.Tool;
 
 import java.util.List;
 
@@ -15,6 +16,18 @@ public class PortfolioProjectServiceImpl implements PortfolioProjectService {
     @Override
     public List<PortfolioProject> getAllByTechnician(Long technicianId) {
         return portfolioProjectDao.getAllByTechnician(technicianId);
+    }
+
+    @Override
+    public void addToolToPortfolioProject(Tool tool, PortfolioProject portfolioProject) {
+        portfolioProject.getTools().add(tool);
+        portfolioProjectDao.update(portfolioProject);
+    }
+
+    @Override
+    public void removeToolFromPortfolioProject(Tool tool, PortfolioProject portfolioProject) {
+        portfolioProject.getTools().remove(tool);
+        portfolioProjectDao.update(portfolioProject);
     }
 
     @Override
