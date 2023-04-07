@@ -14,8 +14,7 @@
         <th>Redirect to</th>
     </tr>
     <tr><td><a href="${pageContext.request.contextPath}/technicians/">Display All Technicians</a></td></tr>
-    <tr><td><a href="${pageContext.request.contextPath}/TBA">Sign In</a></td></tr>
-    <tr><td><a href="${pageContext.request.contextPath}/TBA">Sign Up</a></td></tr>
+    <tr><td><a href="${pageContext.request.contextPath}/technicians/add">Add New Technician</a></td></tr>
 </table>
 </body>
 </html>

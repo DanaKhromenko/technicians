@@ -19,4 +19,31 @@
         <servlet-name>index</servlet-name>
         <url-pattern>/</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>allTechnicians</servlet-name>
+        <servlet-class>com.gmail.danadiadius.technicians.controller.technician.GetAllTechniciansController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>allTechnicians</servlet-name>
+        <url-pattern>/technicians/</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>deleteTechnician</servlet-name>
+        <servlet-class>com.gmail.danadiadius.technicians.controller.technician.DeleteTechnicianController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>deleteTechnician</servlet-name>
+        <url-pattern>/technician/delete</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>addTechnician</servlet-name>
+        <servlet-class>com.gmail.danadiadius.technicians.controller.technician.AddTechnicianController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>addTechnician</servlet-name>
+        <url-pattern>/technicians/add</url-pattern>
+    </servlet-mapping>
 </web-app>
