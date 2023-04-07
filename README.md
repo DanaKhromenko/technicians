@@ -10,4 +10,7 @@ Our team is committed to delivering a high-quality project that utilizes industr
 Thank you for considering our project, and we look forward to showcasing our development skills and creating a valuable resource for job seekers and employers alike.
 
 _____________________________________________________________________
-The project is under development.
+**NOTES:**
+1. The project is under development.
+
+2. To set up a local database, run the code from the resources/init_db.sql file within the MySQL environment.

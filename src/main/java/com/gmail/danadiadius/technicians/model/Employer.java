@@ -1,13 +1,15 @@
 package com.gmail.danadiadius.technicians.model;
 
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
+@Data
 @NoArgsConstructor
 @Entity
-@Table(name="/employers")
+@Table(name="employers")
 public class Employer extends User {
     public Employer(String name, String email, String password) {
         super(name, email, password);
