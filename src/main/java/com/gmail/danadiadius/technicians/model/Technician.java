@@ -7,14 +7,16 @@ import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.util.List;
 
 @Data
 @NoArgsConstructor
 @Entity
-@Table(name="/technicians")
+@Table(name="technicians")
 public class Technician extends User {
     @NotBlank(message = "Desired position can't be blank!")
+    @Size(min = 5, max = 100)
     private String desiredPosition;
 
     @OneToMany
@@ -31,5 +33,16 @@ public class Technician extends User {
                       List<PortfolioProject> portfolioProjects) {
         this(name, email, password, desiredPosition, portfolioProjects);
         setId(id);
+    }
+
+    @Override
+    public String toString() {
+        return "Technician{" +
+                "id=" + getId() +
+                ", name='" + getName() + '\'' +
+                ", email='" + getEmail() + '\'' +
+                ", desiredPosition='" + desiredPosition + '\'' +
+                ", portfolioProjects=" + portfolioProjects +
+                '}';
     }
 }
