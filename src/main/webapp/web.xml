@@ -19,4 +19,88 @@
         <servlet-name>index</servlet-name>
         <url-pattern>/</url-pattern>
     </servlet-mapping>
+
+    <!-- Technicians -->
+    <servlet>
+        <servlet-name>allTechnicians</servlet-name>
+        <servlet-class>com.gmail.danadiadius.technicians.controller.technician.GetAllTechniciansController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>allTechnicians</servlet-name>
+        <url-pattern>/technicians/</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>addTechnician</servlet-name>
+        <servlet-class>com.gmail.danadiadius.technicians.controller.technician.AddTechnicianController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>addTechnician</servlet-name>
+        <url-pattern>/technicians/add</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>deleteTechnician</servlet-name>
+        <servlet-class>com.gmail.danadiadius.technicians.controller.technician.DeleteTechnicianController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>deleteTechnician</servlet-name>
+        <url-pattern>/technician/delete</url-pattern>
+    </servlet-mapping>
+
+    <!-- Tools -->
+    <servlet>
+        <servlet-name>allTools</servlet-name>
+        <servlet-class>com.gmail.danadiadius.technicians.controller.tool.GetAllToolsController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>allTools</servlet-name>
+        <url-pattern>/tools/</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>deleteTool</servlet-name>
+        <servlet-class>com.gmail.danadiadius.technicians.controller.tool.DeleteToolController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>deleteTool</servlet-name>
+        <url-pattern>/tools/delete</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>addTool</servlet-name>
+        <servlet-class>com.gmail.danadiadius.technicians.controller.tool.AddToolController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>addTool</servlet-name>
+        <url-pattern>/tools/add</url-pattern>
+    </servlet-mapping>
+
+    <!-- Portfolio Projects -->
+    <servlet>
+        <servlet-name>allPortfolioProjects</servlet-name>
+        <servlet-class>com.gmail.danadiadius.technicians.controller.portfolioProject.GetAllPortfolioProjectsController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>allPortfolioProjects</servlet-name>
+        <url-pattern>/portfolio_projects/</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>deletePortfolioProject</servlet-name>
+        <servlet-class>com.gmail.danadiadius.technicians.controller.portfolioProject.DeletePortfolioProjectController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>deletePortfolioProject</servlet-name>
+        <url-pattern>/portfolio_projects/delete</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>addPortfolioProject</servlet-name>
+        <servlet-class>com.gmail.danadiadius.technicians.controller.portfolioProject.AddPortfolioProjectController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>addPortfolioProject</servlet-name>
+        <url-pattern>/portfolio_projects/add</url-pattern>
+    </servlet-mapping>
 </web-app>

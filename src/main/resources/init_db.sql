@@ -10,7 +10,7 @@ DROP TABLE IF EXISTS `technicians`;
 DROP TABLE IF EXISTS `employers`;
 
 -- ------------------------------- --
--- Table structure for technicians --
+-- Table structure for Technicians --
 -- ------------------------------- --
 CREATE TABLE `technicians` (
   `id` BIGINT(0) UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -23,7 +23,7 @@ CREATE TABLE `technicians` (
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------- --
--- Table structure for employers --
+-- Table structure for Employers --
 -- ----------------------------- --
 CREATE TABLE `employers` (
   `id` BIGINT(0) UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -35,7 +35,7 @@ CREATE TABLE `employers` (
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ------------------------- --
--- Table structure for tools --
+-- Table structure for Tools --
 -- ------------------------- --
 CREATE TABLE `tools` (
   `id` BIGINT(0) UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -45,25 +45,33 @@ CREATE TABLE `tools` (
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- -------------------------------------- --
--- Table structure for portfolio_projects --
+-- Table structure for Portfolio Projects --
 -- -------------------------------------- --
 CREATE TABLE `portfolio_projects` (
   `id` BIGINT(0) UNSIGNED NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `technician_id` BIGINT(0) UNSIGNED NOT NULL,
   `short_project_description` VARCHAR(300) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `detailed_project_description` VARCHAR(3000) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `source_code_url` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci,
   `interactive_result_url` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci,
   `picture_url` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci,
   `is_deleted` BIT(1) NOT NULL DEFAULT b'0',
-  PRIMARY KEY (`id`) USING BTREE,
-  INDEX `FK_technician_id`(`technician_id`) USING BTREE,
-  CONSTRAINT `FK_technician_id` FOREIGN KEY (`technician_id`) REFERENCES `technicians` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+
+-- ------------------------------------------------ --
+-- Table structure for relations between Technicians and Portfolio Projects --
+-- ------------------------------------------------ --
+CREATE TABLE `technician_portfolio_project` (
+    `technician_id` BIGINT(0) UNSIGNED NOT NULL,
+    `portfolio_project_id` BIGINT UNSIGNED NOT NULL,
+    PRIMARY KEY (`technician_id`, `portfolio_project_id`),
+    FOREIGN KEY (`technician_id`) REFERENCES `technicians` (id) ON DELETE RESTRICT ON UPDATE RESTRICT,
+    FOREIGN KEY (`portfolio_project_id`) REFERENCES `portfolio_projects` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- -------------------------------------------- --
--- Table structure for portfolio_projects_tools --
+-- Table structure for relations between Portfolio Projects and Tools --
 -- -------------------------------------------- --
 CREATE TABLE `portfolio_projects_tools` (
   `portfolio_project_id` BIGINT(0) UNSIGNED NOT NULL,

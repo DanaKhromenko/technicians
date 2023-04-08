@@ -5,26 +5,34 @@
 </style>
 <html>
 <head>
-    <title>All tools</title>
+    <title>All technicians</title>
 </head>
 <body>
-<h1 class="table_light">All tools:</h1>
+<h1 class="table_light">All technicians:</h1>
 <table border="1" class="table_light">
     <tr>
         <th>ID</th>
         <th>Name</th>
+        <th>E-mail</th>
+        <th>Desired position</th>
         <th>Delete</th>
     </tr>
-    <c:forEach var="tool" items="${tools}">
+    <c:forEach var="technician" items="${technicians}">
         <tr>
             <td>
-                <c:out value="${tool.id}"/>
+                <c:out value="${technician.id}"/>
             </td>
             <td>
-                <c:out value="${tool.name}"/>
+                <c:out value="${technician.name}"/>
             </td>
             <td>
-                <a href="${pageContext.request.contextPath}/tools/delete?id=${tool.id}">DELETE</a>
+                <c:out value="${technician.email}"/>
+            </td>
+            <td>
+                <c:out value="${technician.desiredPosition}"/>
+            </td>
+            <td>
+                <a href="${pageContext.request.contextPath}/technicians/delete?id=${technician.id}">DELETE</a>
             </td>
         </tr>
     </c:forEach>
