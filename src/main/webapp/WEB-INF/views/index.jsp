@@ -4,7 +4,7 @@
 </style>
 <html>
 <head>
-    <title>My team</title>
+    <title>TECHNICIANS</title>
 </head>
 <body>
 <form method="post" id="redirect"></form>
@@ -15,6 +15,11 @@
     </tr>
     <tr><td><a href="${pageContext.request.contextPath}/technicians/">Display All Technicians</a></td></tr>
     <tr><td><a href="${pageContext.request.contextPath}/technicians/add">Add New Technician</a></td></tr>
-</table>
+    <tr><td></td></tr>
+    <tr><td><a href="${pageContext.request.contextPath}/tools/">Display All Tools</a></td></tr>
+    <tr><td><a href="${pageContext.request.contextPath}/tools/add">Add New Tool</a></td></tr>
+    <tr><td></td></tr>
+    <tr><td><a href="${pageContext.request.contextPath}/portfolio_projects/">Display All Portfolio Projects</a></td></tr>
+    <tr><td><a href="${pageContext.request.contextPath}/portfolio_projects/add">Add New Portfolio Project</a></td></tr></table>
 </body>
 </html>

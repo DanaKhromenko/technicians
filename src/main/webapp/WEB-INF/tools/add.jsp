@@ -12,15 +12,13 @@
 <h1 class="table_light">Add tool:</h1>
 <table border="1" class="table_light">
     <tr>
-        <th>Name</th>
-        <th>Add</th>
+        <td><label for="name">Name:</label></td>
+        <td><input type="text" id="name" name="name" form="tool" required></td>
     </tr>
     <tr>
-        <td>
-            <input type="text" name="name" form="tool" required>
-        </td>
-        <td>
-            <input type="submit" name="add" form="tool">
+        <td colspan="2">
+            <input type="submit" name="add" form="tool" value="Add">
+            <button type="button" name="cancel" onclick="window.location.href='index.html'">Cancel</button>
         </td>
     </tr>
 </table>

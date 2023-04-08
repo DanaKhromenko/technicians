@@ -28,6 +28,11 @@
             </td>
         </tr>
     </c:forEach>
+    <tr>
+        <td colspan="2">
+            <button type="button" name="back" onclick="window.location.href='index.html'">Back</button>
+        </td>
+    </tr>
 </table>
 </body>
 </html>
