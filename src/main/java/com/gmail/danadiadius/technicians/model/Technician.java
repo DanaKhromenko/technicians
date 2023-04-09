@@ -20,7 +20,6 @@ import java.util.List;
 public class Technician extends User {
     private boolean openToWork;
 
-    @NotBlank(message = "Desired position can't be blank!")
     @Size(min = 5, max = 100)
     private String desiredPosition;
 
@@ -30,4 +29,14 @@ public class Technician extends User {
 
     @OneToMany
     private List<PortfolioProject> portfolioProjects;
+
+    public Technician(User user) {
+        setName(user.getName());
+        setEmail(user.getEmail());
+        setPassword(user.getPassword());
+        setDescription(user.getDescription());
+        setCountry(user.getCountry());
+        setCity(user.getCity());
+        setPhone(user.getPhone());
+    }
 }

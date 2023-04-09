@@ -43,6 +43,7 @@ public class User {
     @Size(max = 50)
     public String city;
 
+    @Column(unique = true, nullable = false)
     @Size(max = 20)
     public String phone;
 

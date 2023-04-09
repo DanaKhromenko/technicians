@@ -21,4 +21,14 @@ public class Employer extends User {
 
     @Size(max = 100)
     private String currentPosition;
+
+    public Employer(User user) {
+        setName(user.getName());
+        setEmail(user.getEmail());
+        setPassword(user.getPassword());
+        setDescription(user.getDescription());
+        setCountry(user.getCountry());
+        setCity(user.getCity());
+        setPhone(user.getPhone());
+    }
 }
