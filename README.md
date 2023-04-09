@@ -14,3 +14,13 @@ _____________________________________________________________________
 1. The project is under development.
 
 2. To set up a local database, run the code from the resources/init_db.sql file within the MySQL environment.
+
+3. Back-End tools used in the project:
+   * Java 11
+   * HTTP Servlets
+   * JDBC
+   * MySQL DB
+   * Custom Injector
+   * Custom annotations (@Service, @DAO, @Inject)
+   * Lombok library
+   * Maven
