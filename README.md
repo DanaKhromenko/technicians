@@ -1,5 +1,5 @@
 # technicians
-Welcome to our GitHub project! Our team is excited to present a Java and JavaScript-based project that leverages DevOps practices to create a dynamic and user-friendly platform for job seekers.
+Welcome to our GitHub project! Our team is pleased to present a Java-based project that represents a dynamic and convenient platform for finding IT jobs and employees.
 
 The project aims to provide a database of skilled professionals seeking job opportunities. Each job seeker's profile is displayed on the platform, showcasing their experience, skillset, and contact information, along with examples of their work.
 
@@ -24,3 +24,4 @@ _____________________________________________________________________
    * Custom annotations (@Service, @DAO, @Inject)
    * Lombok library
    * Maven
+   * Filtring
