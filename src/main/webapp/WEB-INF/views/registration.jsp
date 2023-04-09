@@ -26,7 +26,7 @@
 </head>
 <body onload="showFields()">
 <h1>New User</h1>
-<form action="${pageContext.request.contextPath}/registration/" id="registration" method="post">
+<form action="${pageContext.request.contextPath}/registration" id="registration" method="post">
   Full Name:
   <input type="text" name="name" required><br>
 
@@ -84,7 +84,9 @@
   </div>
 
   <input type="submit" name="submit" form="registration" value="Create Account">
-  <button type="button" name="cancel" onclick="window.location.href='index.html'">Cancel</button>
+  <button type="button" name="cancel" onclick="window.location.href='${pageContext.request.contextPath}/index'">
+    Cancel
+  </button>
 </form>
 </body>
 </html>
