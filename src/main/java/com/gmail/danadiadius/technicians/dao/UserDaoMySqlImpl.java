@@ -1,6 +1,7 @@
 package com.gmail.danadiadius.technicians.dao;
 
 import com.gmail.danadiadius.technicians.exception.DataProcessingException;
+import com.gmail.danadiadius.technicians.lib.Dao;
 import com.gmail.danadiadius.technicians.model.User;
 import com.gmail.danadiadius.technicians.util.ConnectionUtil;
 
@@ -13,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@Dao
 public class UserDaoMySqlImpl implements UserDao {
     @Override
     public Optional<User> findByEmail(String email) {

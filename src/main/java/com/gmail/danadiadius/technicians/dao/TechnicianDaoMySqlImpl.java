@@ -45,7 +45,10 @@ public class TechnicianDaoMySqlImpl implements TechnicianDao {
             preparedStatement.setBoolean(2, technician.isOpenToWork());
             preparedStatement.setString(3, technician.getDesiredPosition());
             preparedStatement.setInt(4, technician.getDesiredAnnualSalary());
-            preparedStatement.setString(5, technician.getAnnualSalaryCurrency().getCurrencyCode());
+            Currency currency = technician.getAnnualSalaryCurrency();
+            if (currency != null) {
+                preparedStatement.setString(5, currency.getCurrencyCode());
+            }
             preparedStatement.executeUpdate();
             ResultSet resultSet = preparedStatement.getGeneratedKeys();
             if (resultSet.next()) {
@@ -53,9 +56,11 @@ public class TechnicianDaoMySqlImpl implements TechnicianDao {
             }
 
             // Store technician's portfolio projects to DB
-            for (PortfolioProject portfolioProject : technician.getPortfolioProjects()) {
-                PortfolioProject portfolioProjectFromDB = portfolioProjectService.create(portfolioProject);
-                portfolioProject.setId(portfolioProjectFromDB.getId());
+            if (technician.getPortfolioProjects() != null) {
+                for (PortfolioProject portfolioProject : technician.getPortfolioProjects()) {
+                    PortfolioProject portfolioProjectFromDB = portfolioProjectService.create(portfolioProject);
+                    portfolioProject.setId(portfolioProjectFromDB.getId());
+                }
             }
 
             return technician;

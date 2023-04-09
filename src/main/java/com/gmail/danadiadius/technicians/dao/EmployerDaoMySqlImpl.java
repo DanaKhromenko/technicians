@@ -1,6 +1,7 @@
 package com.gmail.danadiadius.technicians.dao;
 
 import com.gmail.danadiadius.technicians.exception.DataProcessingException;
+import com.gmail.danadiadius.technicians.lib.Dao;
 import com.gmail.danadiadius.technicians.lib.Inject;
 import com.gmail.danadiadius.technicians.model.Employer;
 import com.gmail.danadiadius.technicians.model.User;
@@ -15,18 +16,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@Dao
 public class EmployerDaoMySqlImpl implements EmployerDao {
     @Inject
     private UserService userService;
 
     @Override
     public Employer create(Employer employer) {
-        User user = userService.create(employer);
-
         String query = "INSERT INTO employers (user_id, is_hiring, current_position, company_name) VALUES (?, ?, ?, ?)";
         try (Connection connection = ConnectionUtil.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setLong(1, user.getId());
+            preparedStatement.setLong(1, employer.getId());
             preparedStatement.setBoolean(2, employer.isHiring());
             preparedStatement.setString(3, employer.getCurrentPosition());
             preparedStatement.setString(4, employer.getCompanyName());
