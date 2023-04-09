@@ -1,19 +1,24 @@
 package com.gmail.danadiadius.technicians.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
-import javax.persistence.MappedSuperclass;
 import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.validation.constraints.Size;
 
-@MappedSuperclass
+@Entity
 @Data
 @NoArgsConstructor
-public abstract class User {
+@AllArgsConstructor
+@Table(name="users")
+public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -26,20 +31,20 @@ public abstract class User {
     private String email;
 
     @Column(nullable = false)
+    @ToString.Exclude
     private String password;
 
-    public User(String name, String email, String password) {
-        this.name = name;
-        this.email = email;
-        this.password = password;
-    }
+    @Size(max = 1000)
+    public String description;
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", email='" + email + '\'' +
-                '}';
-    }
+    @Size(max = 50)
+    public String country;
+
+    @Size(max = 50)
+    public String city;
+
+    @Size(max = 20)
+    public String phone;
+
+    public Boolean isDeleted;
 }
