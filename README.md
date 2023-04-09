@@ -24,4 +24,4 @@ _____________________________________________________________________
    * Custom annotations (@Service, @DAO, @Inject)
    * Lombok library
    * Maven
-   * Filtring
+   * Filtering
