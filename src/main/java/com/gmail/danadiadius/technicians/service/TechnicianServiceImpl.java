@@ -5,6 +5,7 @@ import com.gmail.danadiadius.technicians.lib.Inject;
 import com.gmail.danadiadius.technicians.lib.Service;
 import com.gmail.danadiadius.technicians.model.PortfolioProject;
 import com.gmail.danadiadius.technicians.model.Technician;
+import com.gmail.danadiadius.technicians.model.User;
 
 import java.util.List;
 import java.util.Optional;
@@ -13,6 +14,9 @@ import java.util.Optional;
 public class TechnicianServiceImpl implements TechnicianService {
     @Inject
     private TechnicianDao technicianDao;
+
+    @Inject
+    private UserService userService;
 
     @Override
     public Optional<Technician> findByEmail(String email) {
@@ -33,12 +37,14 @@ public class TechnicianServiceImpl implements TechnicianService {
 
     @Override
     public Technician create(Technician technician) {
+        User user = userService.create(technician);
+        technician.setId(user.getId());
         return technicianDao.create(technician);
     }
 
     @Override
     public Technician get(Long id) {
-        return technicianDao.get(id).get();
+        return technicianDao.get(id).orElseThrow();
     }
 
     @Override
@@ -48,11 +54,13 @@ public class TechnicianServiceImpl implements TechnicianService {
 
     @Override
     public Technician update(Technician technician) {
+        User user = userService.update(technician);
+        technician.setPassword(user.getPassword());
         return technicianDao.update(technician);
     }
 
     @Override
     public boolean delete(Long id) {
-        return technicianDao.delete(id);
+        return userService.delete(id);
     }
 }

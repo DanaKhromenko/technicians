@@ -13,6 +13,7 @@
     <tr>
         <th>ID</th>
         <th>Name</th>
+        <th>Update</th>
         <th>Delete</th>
     </tr>
     <c:forEach var="tool" items="${tools}">
@@ -22,6 +23,9 @@
             </td>
             <td>
                 <c:out value="${tool.name}"/>
+            </td>
+            <td>
+                <a href="${pageContext.request.contextPath}/tools/update?id=${tool.id}&name=${tool.name}">UPDATE</a>
             </td>
             <td>
                 <a href="${pageContext.request.contextPath}/tools/delete?id=${tool.id}">DELETE</a>
