@@ -10,20 +10,27 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class AddToolController extends HttpServlet {
+public class UpdateToolController extends HttpServlet {
     private static final Injector injector = Injector.getInstance("com.gmail.danadiadius.technicians");
     private final ToolService toolService = (ToolService) injector.getInstance(ToolService.class);
 
     @Override
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("/WEB-INF/tools/add.jsp").forward(req, resp);
+        Long id = Long.valueOf(req.getParameter("id"));
+        String name = req.getParameter("name");
+
+        req.setAttribute("id", id);
+        req.setAttribute("name", name);
+        req.getRequestDispatcher("/WEB-INF/tools/update.jsp").forward(req, resp);
     }
 
     @Override
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        Long id = Long.valueOf(req.getParameter("id"));
         String name = req.getParameter("name");
-        Tool tool = new Tool(name);
-        toolService.create(tool);
-        resp.sendRedirect("/tools/all");
+        Tool tool = new Tool(id, name);
+        toolService.update(tool);
+
+        resp.sendRedirect("tools/");
     }
 }
