@@ -22,7 +22,7 @@ CREATE TABLE `users` (
   `description` VARCHAR(1000) CHARACTER SET utf8 COLLATE utf8_general_ci,
   `country` VARCHAR(50) CHARACTER SET utf8 COLLATE utf8_general_ci,
   `city` VARCHAR(50) CHARACTER SET utf8 COLLATE utf8_general_ci,
-  `phone` VARCHAR(20) CHARACTER SET utf8 COLLATE utf8_general_ci UNIQUE,
+  `phone` VARCHAR(20) CHARACTER SET utf8 COLLATE utf8_general_ci UNIQUE NOT NULL,
   `is_deleted` BIT(1) NOT NULL DEFAULT b'0',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
