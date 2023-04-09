@@ -13,8 +13,8 @@
     <tr>
         <th>Redirect to</th>
     </tr>
-    <tr><td><a href="${pageContext.request.contextPath}/login/">Sign in</a></td></tr>
-    <tr><td><a href="${pageContext.request.contextPath}/registration/">Sign up</a></td></tr>
+    <tr><td><a href="${pageContext.request.contextPath}/login">Login</a></td></tr>
+    <tr><td><a href="${pageContext.request.contextPath}/registration">Registration</a></td></tr>
     <tr><td></td></tr>
     <tr><td><a href="${pageContext.request.contextPath}/technicians/">Display All Technicians</a></td></tr>
     <tr><td><a href="${pageContext.request.contextPath}/technicians/add">Add New Technician</a></td></tr>

@@ -28,7 +28,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>loginController</servlet-name>
-        <url-pattern>/login/</url-pattern>
+        <url-pattern>/login</url-pattern>
     </servlet-mapping>
 
     <!-- Technicians -->
@@ -66,7 +66,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>registerNewUser</servlet-name>
-        <url-pattern>/registration/</url-pattern>
+        <url-pattern>/registration</url-pattern>
     </servlet-mapping>
 
     <!-- Tools -->
@@ -134,4 +134,14 @@
         <servlet-name>addPortfolioProject</servlet-name>
         <url-pattern>/portfolio_projects/add</url-pattern>
     </servlet-mapping>
+
+    <!-- Filtering -->
+    <filter>
+        <filter-name>authenticationFilter</filter-name>
+        <filter-class>com.gmail.danadiadius.technicians.web.filter.AuthenticationFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>authenticationFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
 </web-app>
