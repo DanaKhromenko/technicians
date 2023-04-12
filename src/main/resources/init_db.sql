@@ -4,7 +4,6 @@ SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
 
 DROP TABLE IF EXISTS `portfolio_projects_tools`;
-DROP TABLE IF EXISTS `technician_portfolio_project`;
 DROP TABLE IF EXISTS `portfolio_projects`;
 DROP TABLE IF EXISTS `tools`;
 DROP TABLE IF EXISTS `technicians`;
@@ -23,6 +22,7 @@ CREATE TABLE `users` (
   `country` VARCHAR(50) CHARACTER SET utf8 COLLATE utf8_general_ci,
   `city` VARCHAR(50) CHARACTER SET utf8 COLLATE utf8_general_ci,
   `phone` VARCHAR(20) CHARACTER SET utf8 COLLATE utf8_general_ci UNIQUE NOT NULL,
+  `picture` BLOB,
   `is_deleted` BIT(1) NOT NULL DEFAULT b'0',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
@@ -92,99 +92,129 @@ CREATE TABLE `tools` (
 INSERT INTO tools (name)
 VALUES
   ('HTML'),
+  ('HTML5'),
   ('CSS'),
-  ('JavaScript'),
-  ('TypeScript'),
-  ('React'),
-  ('Java'),
-  ('Spring'),
-  ('Maven'),
-  ('Gradle'),
+  ('SCSS'),
+  ('BEM'),
+  ('JAVASCRIPT'),
+  ('TYPESCRIPT'),
+  ('REACT'),
+  ('ANGULAR'),
+  ('JAVA'),
+  ('SPRING FRAMEWORK'),
+  ('SPRING BOOT'),
+  ('SPRING SECURITY'),
+  ('SPRING MVC'),
+  ('MAVEN'),
+  ('GRADLE'),
   ('JDBC'),
-  ('Hibernate'),
-  ('Golang'),
-  ('Python'),
-  ('SCSS');
+  ('JPA'),
+  ('HIBERNATE'),
+  ('SERVLETS'),
+  ('GOLANG'),
+  ('PYTHON'),
+  ('MYSQL'),
+  ('TOKEN'),
+  ('FILTERING'),
+  ('AWS'),
+  ('AWS LAMBDA'),
+  ('AWS CLOUDWATCH'),
+  ('DYNAMO DB'),
+  ('GIT'),
+  ('GIT HUB');
 
 -- -------------------------------------- --
 -- Table structure for Portfolio Projects --
 -- -------------------------------------- --
 CREATE TABLE `portfolio_projects` (
   `id` BIGINT(0) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `technician_id` BIGINT(0) UNSIGNED NOT NULL,
   `name` VARCHAR(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `short_project_description` VARCHAR(300) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `source_code_url` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci,
-  `interactive_result_url` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci,
-  `picture_url` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci,
+  `description` VARCHAR(3000) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `url` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci,
+  `picture` BLOB,
   `is_deleted` BIT(1) NOT NULL DEFAULT b'0',
-  PRIMARY KEY (`id`) USING BTREE
+  PRIMARY KEY (`id`) USING BTREE,
+  FOREIGN KEY (`technician_id`) REFERENCES `technicians` (`user_id`)
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
-INSERT INTO portfolio_projects (name, short_project_description, source_code_url, interactive_result_url, picture_url)
+INSERT INTO portfolio_projects (technician_id, name, url, description)
 VALUES
-  ('Technicians', 'This project aims to assist IT professionals in showcasing their skills and knowledge to potential employers.',
-   'https://github.com/DanaKhromenko/technicians', 'http://localhost:8080/index', '/resources/pictures/developer.png'),
-  ('Taxi Service', 'The Taxi Service Web Application',
-   'https://github.com/DanaKhromenko/jv-web-security/tree/hw-web-security-solution', NULL, '/resources/pictures/taxi.png'),
-  ('Cinema', 'The Cinema Ticket Application',
-   'https://github.com/DanaKhromenko/jv-spring-stateless/tree/hw-spring-stateless-solution', NULL, '/resources/pictures/cinema.png'),
-  ('Miami', 'Miami Condo Kings landing page',
-   'https://github.com/VadimKhromenko/layout_miami/tree/develop-khromenko', NULL, '/resources/pictures/miami.jpg');
-
--- ------------------------------------------------------------------------ --
--- Table structure for relations between Technicians and Portfolio Projects --
--- ------------------------------------------------------------------------ --
-CREATE TABLE `technician_portfolio_project` (
-    `technician_id` BIGINT(0) UNSIGNED NOT NULL,
-    `portfolio_project_id` BIGINT(0) UNSIGNED NOT NULL,
-    `detailed_project_description` VARCHAR(3000) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-    PRIMARY KEY (`technician_id`, `portfolio_project_id`),
-    FOREIGN KEY (`technician_id`) REFERENCES `technicians` (`user_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-    FOREIGN KEY (`portfolio_project_id`) REFERENCES `portfolio_projects` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
-
-INSERT INTO technician_portfolio_project (technician_id, portfolio_project_id, detailed_project_description)
-VALUES
-  (1, 1, 'This project empowers IT professionals to showcase their skills by providing recruiters and potential employers with access to their projects, highlighting their abilities in a tangible way. On my end, the project features a three-tier architecture implemented using: Java 11, HTTP Servlets, JDBC, MySQL DB, Custom Injector, Custom annotations (@Service, @DAO, @Inject), Lombok library, Maven, Filtering'),
-  (1, 2, 'The taxi service web application, where drivers and cars can be managed. The project is built using a three-tier architecture and implements CRUD operations and HttpServlet, allowing for efficient data management and request handling. Additionally, the project uses a MySQL database and features a custom injector for enhanced performance and scalability.'),
-  (1, 3, 'Web application written with Spring, where users, orders, movies, movie sessions etc. can be managed.'),
-  (2, 1, 'This project empowers IT professionals to showcase their skills by providing recruiters and potential employers with access to their projects, highlighting their abilities in a tangible way. On my end, the project features a three-tier architecture implemented using: JavaScript, HTML, CSS, MySQL, Java'),
-  (2, 4, 'Welcome to Miami Best Real Estate, where we are committed to helping you find your dream home in Miami. Our experienced team of real estate professionals specialize in buying and selling properties across the city, and we pride ourselves on delivering exceptional service and personalized attention to our clients. From luxury waterfront properties to charming suburban homes, we have a wide range of options to fit your needs and budget. Browse our listings and let us help you find your perfect Miami home.');
+  (1, 'Technicians', 'https://github.com/DanaKhromenko/technicians', 'This project aims to assist IT professionals in showcasing their skills and knowledge to potential employers.'),
+  (1, 'Taxi Service', 'https://github.com/DanaKhromenko/jv-web-security/tree/hw-web-security-solution', 'The taxi service web application, where drivers and cars can be managed. The project is built using a three-tier architecture and implements CRUD operations and HttpServlet, allowing for efficient data management and request handling. Additionally, the project uses a MySQL database and features a custom injector for enhanced performance and scalability.'),
+  (1, 'Cinema', 'https://github.com/DanaKhromenko/jv-spring-stateless/tree/hw-spring-stateless-solution', 'The Cinema Ticket Application. Web application written with Spring, where users, orders, movies, movie sessions etc. can be managed.'),
+  (2, 'Technicians', 'https://github.com/DanaKhromenko/technicians', 'This project empowers IT professionals to showcase their skills by providing recruiters and potential employers with access to their projects, highlighting their abilities in a tangible way. On my end, the project features a three-tier architecture implemented using: JavaScript, HTML, CSS, MySQL, Java'),
+  (2, 'Miami', 'https://github.com/VadimKhromenko/layout_miami/tree/develop-khromenko', 'Miami Condo Kings landing page. Welcome to Miami Best Real Estate, where we are committed to helping you find your dream home in Miami. Our experienced team of real estate professionals specialize in buying and selling properties across the city, and we pride ourselves on delivering exceptional service and personalized attention to our clients. From luxury waterfront properties to charming suburban homes, we have a wide range of options to fit your needs and budget. Browse our listings and let us help you find your perfect Miami home.');
 
 -- -------------------------------------------- --
--- Table structure for relations between Portfolio Projects and Tools --
+-- Table structure for relations between Technicians, Portfolio Projects and Tools --
 -- -------------------------------------------- --
 CREATE TABLE `portfolio_projects_tools` (
   `portfolio_project_id` BIGINT(0) UNSIGNED NOT NULL,
   `tool_id` BIGINT(0) UNSIGNED NOT NULL,
-  PRIMARY KEY (`portfolio_project_id`, `tool_id`) USING BTREE,
-  INDEX `portfolio_project_id`(`portfolio_project_id`) USING BTREE,
-  INDEX `tool_id`(`tool_id`) USING BTREE,
-  CONSTRAINT `portfolio_project_id` FOREIGN KEY (`portfolio_project_id`) REFERENCES `portfolio_projects` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  CONSTRAINT `tool_id` FOREIGN KEY (`tool_id`) REFERENCES `tools` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+  PRIMARY KEY (`portfolio_project_id`, `tool_id`),
+  FOREIGN KEY (`portfolio_project_id`) REFERENCES `portfolio_projects` (`id`),
+  FOREIGN KEY (`tool_id`) REFERENCES tools (`id`)
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 INSERT INTO portfolio_projects_tools (portfolio_project_id, tool_id)
 VALUES
-  (1, 1),
-  (1, 2),
   (1, 3),
-  (1, 6),
-  (1, 7),
-  (1, 8),
   (1, 10),
-  (2, 6),
-  (2, 7),
-  (2, 8),
+  (1, 11),
+  (1, 12),
+  (1, 13),
+  (1, 14),
+  (1, 15),
+  (1, 17),
+  (1, 18),
+  (1, 20),
+  (1, 23),
+  (1, 25),
+  (1, 30),
+  (1, 31),
+  (2, 1),
+  (2, 3),
   (2, 10),
-  (2, 11),
-  (3, 6),
-  (3, 7),
-  (3, 8),
+  (2, 15),
+  (2, 17),
+  (2, 20),
+  (2, 23),
+  (2, 25),
+  (2, 30),
+  (2, 31),
+  (3, 1),
+  (3, 3),
+  (3, 10),
   (3, 11),
+  (3, 13),
+  (3, 14),
+  (3, 15),
+  (3, 17),
+  (3, 20),
+  (3, 23),
+  (3, 24),
+  (3, 25),
+  (3, 30),
+  (3, 31),
   (4, 1),
   (4, 2),
   (4, 3),
-  (4, 14);
+  (4, 4),
+  (4, 5),
+  (4, 6),
+  (4, 15),
+  (4, 23),
+  (4, 30),
+  (4, 31),
+  (5, 1),
+  (5, 2),
+  (5, 3),
+  (5, 4),
+  (5, 5),
+  (5, 6),
+  (5, 15),
+  (5, 30),
+  (5, 31);
 
 SET FOREIGN_KEY_CHECKS = 1;
