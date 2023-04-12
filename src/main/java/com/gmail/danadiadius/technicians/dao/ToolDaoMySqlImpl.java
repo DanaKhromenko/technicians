@@ -2,6 +2,7 @@ package com.gmail.danadiadius.technicians.dao;
 
 import com.gmail.danadiadius.technicians.exception.DataProcessingException;
 import com.gmail.danadiadius.technicians.lib.Dao;
+import com.gmail.danadiadius.technicians.model.PortfolioProject;
 import com.gmail.danadiadius.technicians.model.Tool;
 import com.gmail.danadiadius.technicians.util.ConnectionUtil;
 
@@ -18,7 +19,7 @@ import java.util.Optional;
 public class ToolDaoMySqlImpl implements ToolDao {
     @Override
     public Tool create(Tool tool) {
-        String query = "INSERT INTO tools (name) VALUES (?)";
+        String query = "INSERT INTO tools (name) VALUES (?) ON DUPLICATE KEY UPDATE name = name, is_deleted = FALSE";
         try (Connection connection = ConnectionUtil.getConnection();
              PreparedStatement preparedStatement
                      = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
@@ -93,11 +94,10 @@ public class ToolDaoMySqlImpl implements ToolDao {
 
     @Override
     public List<Tool> getAllByPortfolioProject(Long portfolioProjectId) {
-        String selectQuery = "SELECT tools.id as id, "
-                + "tools.name as name "
-                + "FROM tools"
-                + " INNER JOIN portfolio_projects_tools ON tools.id = portfolio_projects_tools.tool_id "
-                + "WHERE portfolio_projects_tools.portfolio_project_id = ? ";
+        String selectQuery = "SELECT DISTINCT t.* " +
+                "FROM portfolio_projects_tools ppt " +
+                "INNER JOIN tools t on ppt.tool_id = t.id " +
+                "WHERE portfolio_project_id = ? AND t.is_deleted = FALSE; ";
         List<Tool> tools = new ArrayList<>();
         try (Connection connection = ConnectionUtil.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(selectQuery)) {
@@ -106,10 +106,57 @@ public class ToolDaoMySqlImpl implements ToolDao {
             while (resultSet.next()) {
                 tools.add(new Tool(resultSet.getObject("id", Long.class), resultSet.getNString("name")));
             }
+            return tools;
         } catch (SQLException e) {
-            throw new DataProcessingException("Could not get all tools by portfolio project " + portfolioProjectId, e);
+            throw new DataProcessingException("Could not get all tools by portfolio project id " + portfolioProjectId, e);
         }
-        return tools;
+    }
+
+    @Override
+    public void updatePortfolioProjectsTools(PortfolioProject portfolioProject) {
+        List<Tool> toolsCurrent = portfolioProject.getTools();
+        List<Tool> toolsFromDB = getAllByPortfolioProject(portfolioProject.getId());
+
+        // Remove from MySQL DB relation between portfolio project and tools that are no longer belong to it
+        List<Tool> toolsToRemoveFromDB = new ArrayList<>(toolsFromDB);
+        toolsToRemoveFromDB.removeAll(toolsCurrent);
+        toolsToRemoveFromDB.forEach(t -> removeToolFromPortfolioProject(portfolioProject.getId(), t.getId()));
+
+        // Add to MySQL DB tools that are now belong to portfolio project
+        // and add relations between portfolio project and tools
+        List<Tool> toolsToAddToDB = new ArrayList<>(toolsCurrent);
+        toolsToAddToDB.removeAll(toolsFromDB);
+        toolsToAddToDB.forEach(t -> {
+            create(t);
+            addToolToPortfolioProject(portfolioProject.getId(), t.getId());
+        });
+    }
+
+    private void removeToolFromPortfolioProject(Long portfolioProjectId, Long toolId) {
+        String query = "DELETE FROM portfolio_projects_tools WHERE portfolio_project_id = ? AND tool_id = ?";
+        try (Connection connection = ConnectionUtil.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setLong(1, portfolioProjectId);
+            preparedStatement.setLong(2, toolId);
+            preparedStatement.executeQuery();
+        } catch (SQLException e) {
+            throw new DataProcessingException("Could not remove tool with id " + toolId +
+                    " from portfolio project with id " + portfolioProjectId, e);
+        }
+    }
+
+    private void addToolToPortfolioProject(Long portfolioProjectId, Long toolId) {
+        String query = "INSERT INTO portfolio_projects_tools (portfolio_project_id, tool_id) VALUES (?, ?)";
+        try (Connection connection = ConnectionUtil.getConnection();
+             PreparedStatement preparedStatement
+                     = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
+            preparedStatement.setLong(1, portfolioProjectId);
+            preparedStatement.setLong(2, toolId);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new DataProcessingException("Could not add tool with id " + toolId +
+                    " to portfolio project with id " + portfolioProjectId, e);
+        }
     }
 
     private Tool setTool(ResultSet resultSet) throws SQLException {

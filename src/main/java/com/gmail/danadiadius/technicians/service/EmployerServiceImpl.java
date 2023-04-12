@@ -7,7 +7,6 @@ import com.gmail.danadiadius.technicians.model.Employer;
 import com.gmail.danadiadius.technicians.model.User;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class EmployerServiceImpl implements EmployerService {
@@ -43,11 +42,7 @@ public class EmployerServiceImpl implements EmployerService {
 
     @Override
     public boolean delete(Long id) {
+        // Due to soft delete strategy there is no need to delete data from `technicians` MySQL table
         return userService.delete(id);
-    }
-
-    @Override
-    public Optional<Employer> findByEmail(String email) {
-        return employerDao.findByEmail(email);
     }
 }

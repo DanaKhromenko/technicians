@@ -13,10 +13,10 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 
-@Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Entity
 @Table(name="users")
 public class User {
     @Id
@@ -35,17 +35,17 @@ public class User {
     private String password;
 
     @Size(max = 1000)
-    public String description;
+    private String description;
 
     @Size(max = 50)
-    public String country;
+    private String country;
 
     @Size(max = 50)
-    public String city;
+    private String city;
 
     @Column(unique = true, nullable = false)
     @Size(max = 20)
-    public String phone;
+    private String phone;
 
-    public Boolean isDeleted;
+    private byte[] picture;
 }

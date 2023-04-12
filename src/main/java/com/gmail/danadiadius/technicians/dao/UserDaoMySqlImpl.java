@@ -125,15 +125,16 @@ public class UserDaoMySqlImpl implements UserDao {
     }
 
     private User getUser(ResultSet resultSet) throws SQLException {
-        Long id = resultSet.getObject("id", Long.class);
-        String name = resultSet.getString("name");
-        String email = resultSet.getString("email");
-        String password = resultSet.getString("password");
-        String description = resultSet.getString("description");
-        String country = resultSet.getString("country");
-        String city = resultSet.getString("city");
-        String phone = resultSet.getString("phone");
-        boolean isDeleted = resultSet.getBoolean("is_deleted");
-        return new User(id, name, email, password, description, country, city, phone, isDeleted);
+        User user = new User();
+        user.setId(resultSet.getObject("id", Long.class));
+        user.setName(resultSet.getString("name"));
+        user.setEmail(resultSet.getString("email"));
+        user.setPassword(resultSet.getString("password"));
+        user.setDescription(resultSet.getString("description"));
+        user.setCountry(resultSet.getString("country"));
+        user.setCity(resultSet.getString("city"));
+        user.setPhone(resultSet.getString("phone"));
+        user.setPicture(new byte[]{}); // TODO: update with real user picture data
+        return user;
     }
 }

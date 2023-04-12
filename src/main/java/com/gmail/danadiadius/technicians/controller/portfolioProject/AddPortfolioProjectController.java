@@ -2,7 +2,6 @@ package com.gmail.danadiadius.technicians.controller.portfolioProject;
 
 import com.gmail.danadiadius.technicians.lib.Injector;
 import com.gmail.danadiadius.technicians.model.PortfolioProject;
-import com.gmail.danadiadius.technicians.model.Tool;
 import com.gmail.danadiadius.technicians.service.PortfolioProjectService;
 
 import javax.servlet.ServletException;
@@ -10,8 +9,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Collections;
-import java.util.List;
 
 public class AddPortfolioProjectController extends HttpServlet {
     private static final Injector injector = Injector.getInstance("com.gmail.danadiadius.technicians");
@@ -25,16 +22,16 @@ public class AddPortfolioProjectController extends HttpServlet {
 
     @Override
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String name = req.getParameter("name");
-        String shortProjectDescription = req.getParameter("short_project_description");
-        String detailedProjectDescription = req.getParameter("detailed_project_description");
-        String sourceCodeUrl = req.getParameter("source_code_url");
-        String interactiveResultUrl = req.getParameter("interactive_result_url");
-        String pictureUrl = req.getParameter("picture_url");
-        PortfolioProject portfolioProject = new PortfolioProject(name, shortProjectDescription,
-                detailedProjectDescription, sourceCodeUrl, interactiveResultUrl, pictureUrl, Collections.emptyList());
-        // TODO: add TOOLS
-        portfolioProjectService.create(portfolioProject);
-        resp.sendRedirect("/portfolio_projects/add");
+        PortfolioProject portfolioProject = new PortfolioProject();
+        portfolioProject.setName(req.getParameter("name"));
+        portfolioProject.setDescription(req.getParameter("description"));
+        portfolioProject.setUrl(req.getParameter("url"));
+        /* portfolioProject.setPicture(new byte[]{}); TODO: update with a real picture data*/
+
+        portfolioProject = portfolioProjectService.create(portfolioProject);
+        portfolioProjectService.addPortfolioProjectToTechnician(Long.parseLong(req.getParameter("technician_id")),
+                portfolioProject.getId());
+
+        resp.sendRedirect("/portfolio_projects/all");
     }
 }

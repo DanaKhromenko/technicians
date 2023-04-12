@@ -21,8 +21,8 @@ public class AddToolController extends HttpServlet {
 
     @Override
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String name = req.getParameter("name");
-        Tool tool = new Tool(name);
+        Tool tool = new Tool();
+        tool.setName(req.getParameter("name"));
         toolService.create(tool);
         resp.sendRedirect("/tools/all");
     }

@@ -89,6 +89,7 @@ public class EmployerDaoMySqlImpl implements EmployerDao {
 
     @Override
     public boolean delete(Long id) {
+
         return userService.delete(id);
     }
 
@@ -121,23 +122,5 @@ public class EmployerDaoMySqlImpl implements EmployerDao {
         preparedStatement.setString(3, employer.getCompanyName());
         preparedStatement.setLong(4, employer.getId());
         return preparedStatement;
-    }
-
-    @Override
-    public Optional<Employer> findByEmail(String email) {
-        String query = "SELECT * FROM employers e INNER JOIN users u ON e.user_id = u.id WHERE u.email = ? AND " +
-                "u.is_deleted = FALSE";
-        try (Connection connection = ConnectionUtil.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setString(1, email);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            Employer employer = null;
-            if (resultSet.next()) {
-                employer = getEmployer(resultSet);
-            }
-            return Optional.ofNullable(employer);
-        } catch (SQLException e) {
-            throw new DataProcessingException("Could not get employer by e-mail " + email, e);
-        }
     }
 }
