@@ -41,7 +41,7 @@ public class RegistrationController extends HttpServlet {
         if (type.equals("employer")) {
             Employer employer = new Employer(user);
 
-            employer.setHiring(req.getParameter("is_hiring").equals("on"));
+            employer.setHiring(getBooleanFromFlag(req.getParameter("is_hiring")));
             employer.setCompanyName(req.getParameter("company_name"));
             employer.setCurrentPosition(req.getParameter("current_position"));
 
@@ -49,7 +49,7 @@ public class RegistrationController extends HttpServlet {
         } else {
             Technician technician = new Technician(user);
 
-            technician.setOpenToWork(req.getParameter("open_to_work").equals("on"));
+            technician.setOpenToWork(getBooleanFromFlag(req.getParameter("open_to_work")));
             technician.setDesiredPosition(req.getParameter("desired_position"));
 
             String desiredAnnualSalaryStr = req.getParameter("desired_annual_salary");
@@ -71,5 +71,9 @@ public class RegistrationController extends HttpServlet {
             technicianService.create(technician);
         }
         resp.sendRedirect("/login");
+    }
+
+    private boolean getBooleanFromFlag(String value) {
+        return value != null && value.equals("on");
     }
 }
