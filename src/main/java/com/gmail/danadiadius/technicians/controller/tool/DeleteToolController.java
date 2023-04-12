@@ -15,7 +15,7 @@ public class DeleteToolController extends HttpServlet {
 
     @Override
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        toolService.delete(Long.parseLong(req.getParameter("id")));
+        toolService.delete(Long.valueOf(req.getParameter("id")));
         resp.sendRedirect("tools/all");
     }
 }
