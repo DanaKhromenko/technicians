@@ -17,6 +17,7 @@ _____________________________________________________________________
 
 3. Back-End tools used in the project:
    * Java 11
+   * Stream API
    * HTTP Servlets
    * JDBC
    * MySQL DB
