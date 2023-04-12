@@ -3,6 +3,7 @@ package com.gmail.danadiadius.technicians.service;
 import com.gmail.danadiadius.technicians.dao.ToolDao;
 import com.gmail.danadiadius.technicians.lib.Inject;
 import com.gmail.danadiadius.technicians.lib.Service;
+import com.gmail.danadiadius.technicians.model.PortfolioProject;
 import com.gmail.danadiadius.technicians.model.Tool;
 
 import java.util.List;
@@ -14,12 +15,13 @@ public class ToolServiceImpl implements ToolService {
 
     @Override
     public Tool create(Tool tool) {
+        standardizeName(tool);
         return toolDao.create(tool);
     }
 
     @Override
     public Tool get(Long id) {
-        return toolDao.get(id).get();
+        return toolDao.get(id).orElseThrow();
     }
 
     @Override
@@ -29,6 +31,7 @@ public class ToolServiceImpl implements ToolService {
 
     @Override
     public Tool update(Tool tool) {
+        standardizeName(tool);
         return toolDao.update(tool);
     }
 
@@ -37,8 +40,17 @@ public class ToolServiceImpl implements ToolService {
         return toolDao.delete(id);
     }
 
+    private void standardizeName(Tool tool) {
+        tool.setName(tool.getName().toUpperCase());
+    }
+
     @Override
-    public List<Tool> getAllByPortfolioProject(Long portfolioProjectId) {
+    public List<Tool> getAllToolsByPortfolioProject(Long portfolioProjectId) {
         return toolDao.getAllByPortfolioProject(portfolioProjectId);
+    }
+
+    @Override
+    public void updatePortfolioProjectsTools(PortfolioProject portfolioProject) {
+        toolDao.updatePortfolioProjectsTools(portfolioProject);
     }
 }
